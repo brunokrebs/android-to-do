@@ -26,9 +26,6 @@ public class MicroPostAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.micro_post_data, null);
         }
 
-        TextView id = view.findViewById(R.id.micro_post_id);
-        id.setText(microPost.getId());
-
         TextView message = view.findViewById(R.id.micro_post_message);
         message.setText(microPost.getMessage());
         return view;
