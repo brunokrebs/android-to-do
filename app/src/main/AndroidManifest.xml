@@ -18,14 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayMessageActivity">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <activity android:name=".MicroPostFormActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MicroPostForm"></activity>
     </application>
 
 </manifest>

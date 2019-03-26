@@ -2,8 +2,6 @@ package com.auth0.microblog;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +16,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MicroPostForm extends AppCompatActivity {
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MicroPostFormActivity extends AppCompatActivity {
     public static final String NEW_MESSAGE = "com.auth0.microblog.NEW_MESSAGE";
 
     @Override
@@ -45,7 +46,7 @@ public class MicroPostForm extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            startActivity(new Intent(context, DisplayMessageActivity.class));
+                            startActivity(new Intent(context, MainActivity.class));
                         }
                     },
                     new Response.ErrorListener() {

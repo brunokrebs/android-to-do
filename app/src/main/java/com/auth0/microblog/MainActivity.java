@@ -1,13 +1,16 @@
 package com.auth0.microblog;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MicroPost>> {
     private MicroPostAdapter microPostsAdapter;
@@ -19,7 +22,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         microPostsAdapter = new MicroPostAdapter(this, new ArrayList<MicroPost>());
         ListView microPostsListView = findViewById(R.id.micro_posts);
         microPostsListView.setAdapter(microPostsAdapter);
-        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+        LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
+    }
+
+    /**
+     * Called when the user taps the Send button
+     */
+    public void sendMessage(View view) {
+        startActivity(new Intent(this, MicroPostFormActivity.class));
     }
 
     @Override

@@ -27,6 +27,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_check_white_24dp"
+        android:onClick="sendMessage"
         app:layout_constraintBottom_toBottomOf="@+id/micro_posts"
         app:layout_constraintEnd_toEndOf="@+id/micro_posts" />
 </androidx.constraintlayout.widget.ConstraintLayout>
