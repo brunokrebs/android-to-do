@@ -26,6 +26,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
     private AuthAwareActivity originalActivity;
     private Class<? extends AuthAwareActivity> nextActivity;
     private SecureCredentialsManager credentialsManager;
+    private Credentials credentials;
 
     public AuthenticationHandler(AuthAwareActivity originalActivity) {
         this.originalActivity = originalActivity;
@@ -65,8 +66,16 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
         credentialsManager.getCredentials(this);
     }
 
+    public String getAccessToken() {
+        return credentials.getAccessToken();
+    }
+
     public boolean hasValidCredentials() {
-        return this.credentialsManager.hasValidCredentials();
+        boolean hasValidCredentials = this.credentialsManager.hasValidCredentials();
+        if (hasValidCredentials && credentials == null) {
+            refreshCredentials(null);
+        }
+        return hasValidCredentials;
     }
 
     @Override
@@ -90,6 +99,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
     @Override
     public void onSuccess(@NonNull Credentials credentials) {
         credentialsManager.saveCredentials(credentials);
+        this.credentials = credentials;
         if (nextActivity == null) {
             originalActivity.runOnUiThread(new Runnable() {
                 @Override

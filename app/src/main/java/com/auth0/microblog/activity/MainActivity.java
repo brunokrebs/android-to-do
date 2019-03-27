@@ -74,8 +74,6 @@ public class MainActivity extends AuthAwareActivity implements Response.Listener
     public void writeNewMicroPost(View view) {
         if (authenticationHandler.hasValidCredentials()) {
             startActivity(new Intent(this, MicroPostFormActivity.class));
-            return;
         }
-        authenticationHandler.refreshCredentials(MicroPostFormActivity.class);
     }
 }
