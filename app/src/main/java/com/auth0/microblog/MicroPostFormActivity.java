@@ -40,7 +40,7 @@ public class MicroPostFormActivity extends AppCompatActivity {
 
         try {
             JSONObject jo = new JSONObject();
-            jo.put("message", message);
+            jo.put("title", message);
 
             JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, jo,
                     new Response.Listener<JSONObject>() {
