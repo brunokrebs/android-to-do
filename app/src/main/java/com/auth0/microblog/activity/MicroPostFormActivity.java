@@ -17,6 +17,9 @@ import com.auth0.microblog.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import androidx.appcompat.app.AlertDialog;
 
 public class MicroPostFormActivity extends AuthAwareActivity {
@@ -56,7 +59,14 @@ public class MicroPostFormActivity extends AuthAwareActivity {
                                     .show();
                         }
                     }
-            );
+            ) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + authenticationHandler.getAccessToken());
+                    return headers;
+                }
+            };
 
             // Add the request to the RequestQueue.
             queue.add(postRequest);

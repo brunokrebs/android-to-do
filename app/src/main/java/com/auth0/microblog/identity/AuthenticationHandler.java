@@ -42,7 +42,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
         WebAuthProvider.init(auth0)
                 .withScheme("to-do")
                 .withScope("openid profile email offline_access")
-                .withAudience(String.format("https://%s/userinfo", originalActivity.getString(R.string.com_auth0_domain)))
+                .withAudience("https://to-dos-api")
                 .start(originalActivity, this);
     }
 
