@@ -1,6 +1,5 @@
 package com.auth0.microblog;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.auth0.android.Auth0;
-import com.auth0.android.authentication.AuthenticationAPIClient;
-import com.auth0.android.authentication.storage.SecureCredentialsManager;
-import com.auth0.android.authentication.storage.SharedPreferencesStorage;
-import com.auth0.android.provider.WebAuthProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,9 +22,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
+    private AuthenticationHandler authenticationHandler;
     private MicroPostAdapter microPostsAdapter;
-    private SecureCredentialsManager credentialsManager;
-    private Auth0 auth0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,11 +41,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         JsonArrayRequest microPostsRequest = new JsonArrayRequest(url, this, this);
         queue.add(microPostsRequest);
 
-        // configuring Auth0
-        auth0 = new Auth0(this);
-        auth0.setOIDCConformant(true);
-        AuthenticationAPIClient client = new AuthenticationAPIClient(auth0);
-        credentialsManager = new SecureCredentialsManager(this, client, new SharedPreferencesStorage(this));
+        this.authenticationHandler = new AuthenticationHandler(this);
     }
 
     @Override
@@ -84,20 +73,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     }
 
     public void writeNewMicroPost(View view) {
-        if (credentialsManager.hasValidCredentials()) {
+        if (authenticationHandler.hasValidCredentials()) {
             startActivity(new Intent(this, MicroPostFormActivity.class));
             return;
         }
-        startAuthenticationProcess();
-    }
-
-    private void startAuthenticationProcess() {
-        Activity originalActivity = this;
-        Class nextActivity = MicroPostFormActivity.class;
-        WebAuthProvider.init(auth0)
-                .withScheme("to-do")
-                .withScope("openid profile email offline_access")
-                .withAudience(String.format("https://%s/userinfo", getString(R.string.com_auth0_domain)))
-                .start(originalActivity, new AuthenticationCallback(originalActivity, nextActivity));
+        authenticationHandler.refreshCredentials(MicroPostFormActivity.class);
     }
 }
