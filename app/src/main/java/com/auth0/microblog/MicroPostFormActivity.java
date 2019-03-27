@@ -17,11 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class MicroPostFormActivity extends AppCompatActivity {
-    public static final String NEW_MESSAGE = "com.auth0.microblog.NEW_MESSAGE";
-
+public class MicroPostFormActivity extends AuthAwareActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
-    private AuthenticationHandler authenticationHandler;
+public class MainActivity extends AuthAwareActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
     private MicroPostAdapter microPostsAdapter;
 
     @Override
@@ -40,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest microPostsRequest = new JsonArrayRequest(url, this, this);
         queue.add(microPostsRequest);
-
-        this.authenticationHandler = new AuthenticationHandler(this);
     }
 
     @Override

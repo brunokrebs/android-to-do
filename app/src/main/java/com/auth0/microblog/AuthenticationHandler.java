@@ -3,6 +3,7 @@ package com.auth0.microblog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.auth0.android.Auth0;
 import com.auth0.android.authentication.AuthenticationAPIClient;
@@ -20,11 +21,11 @@ import androidx.appcompat.app.AlertDialog;
 
 public class AuthenticationHandler implements AuthCallback, BaseCallback<Credentials, CredentialsManagerException> {
     private Auth0 auth0;
-    private Activity originalActivity;
-    private Class nextActivity;
+    private AuthAwareActivity originalActivity;
+    private Class<? extends AuthAwareActivity> nextActivity;
     private SecureCredentialsManager credentialsManager;
 
-    AuthenticationHandler(Activity originalActivity) {
+    AuthenticationHandler(AuthAwareActivity originalActivity) {
         this.originalActivity = originalActivity;
 
         // configuring Auth0
@@ -42,7 +43,22 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
                 .start(originalActivity, this);
     }
 
-    void refreshCredentials(Class nextActivity) {
+    void logout() {
+        credentialsManager.clearCredentials();
+        originalActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String message = "See you soon!";
+                Toast.makeText(originalActivity, message, Toast.LENGTH_SHORT).show();
+                originalActivity.refreshMenu();
+
+                if (originalActivity instanceof MainActivity) return;
+                originalActivity.startActivity(new Intent(originalActivity, MainActivity.class));
+            }
+        });
+    }
+
+    void refreshCredentials(Class<? extends AuthAwareActivity> nextActivity) {
         this.nextActivity = nextActivity;
         credentialsManager.getCredentials(this);
     }
@@ -72,6 +88,15 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
     @Override
     public void onSuccess(@NonNull Credentials credentials) {
         credentialsManager.saveCredentials(credentials);
+        if (nextActivity == null) {
+            originalActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    originalActivity.refreshMenu();
+                }
+            });
+            return;
+        }
         originalActivity.startActivity(new Intent(originalActivity, nextActivity));
     }
 
