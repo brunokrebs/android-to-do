@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     public void login(View view) {
         WebAuthProvider.init(auth0)
                 .withScheme("to-do")
+                .withScope("openid profile offline_access")
                 .withAudience(String.format("https://%s/userinfo", getString(R.string.com_auth0_domain)))
                 .start(MainActivity.this, new AuthCallback() {
                     @Override
@@ -120,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setTitle("Hello")
+                                        .setMessage(credentials.getIdToken())
+                                        .show();
                                 Toast.makeText(MainActivity.this, credentials.getAccessToken(), Toast.LENGTH_SHORT).show();
                             }
                         });
