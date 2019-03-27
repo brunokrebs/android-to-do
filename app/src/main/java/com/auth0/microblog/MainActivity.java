@@ -5,24 +5,43 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MicroPost>> {
+public class MainActivity extends AppCompatActivity implements Response.Listener<JSONArray>, Response.ErrorListener {
     private MicroPostAdapter microPostsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // set activity view
         setContentView(R.layout.activity_main);
-        microPostsAdapter = new MicroPostAdapter(this, new ArrayList<MicroPost>());
         ListView microPostsListView = findViewById(R.id.micro_posts);
         microPostsListView.setAdapter(microPostsAdapter);
-        LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
+
+        // create the adapter
+        microPostsAdapter = new MicroPostAdapter(this);
+
+
+//        microPostsAdapter.setMicroPosts(list);
+
+        // issue the request
+//        String url = "http://10.0.2.2:3001";
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        JsonArrayRequest microPostsRequest = new JsonArrayRequest(url, this, this);
+//        queue.add(microPostsRequest);
     }
 
     /**
@@ -33,17 +52,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<MicroPost>> onCreateLoader(int id, Bundle args) {
-        return new MicroPostLoader(this);
+    public void onResponse(JSONArray response) {
+//        List<MicroPost> list = new ArrayList<>();
+//        list.add(new MicroPost("emp1", "Brahma"));
+//        list.add(new MicroPost("emp2", "Vishnu"));
+//        list.add(new MicroPost("emp3", "Mahesh"));
+//        microPostsAdapter.setMicroPosts(new ArrayList<MicroPost>());
+//        new AlertDialog.Builder(this)
+//                .setTitle("Message")
+//                .setMessage("List loaded")
+//                .show();
     }
 
     @Override
-    public void onLoadFinished(Loader<List<MicroPost>> loader, List<MicroPost> data) {
-        microPostsAdapter.setMicroPosts(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<MicroPost>> loader) {
-        microPostsAdapter.setMicroPosts(new ArrayList<MicroPost>());
+    public void onErrorResponse(VolleyError error) {
+//        microPostsAdapter.setMicroPosts(new ArrayList<MicroPost>());
+//        new AlertDialog.Builder(this)
+//                .setTitle("Error")
+//                .setMessage(error.getMessage())
+//                .show();
     }
 }

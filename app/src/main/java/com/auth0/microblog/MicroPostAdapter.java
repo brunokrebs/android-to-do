@@ -12,10 +12,14 @@ import java.util.List;
 
 public class MicroPostAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private List<MicroPost> microPosts = new ArrayList<>();
+    private List<MicroPost> microPosts;
 
-    public MicroPostAdapter(Context context, List<MicroPost> microPosts) {
-        this.microPosts = microPosts;
+    public MicroPostAdapter(Context context) {
+        microPosts = new ArrayList<>();
+        microPosts.add(new MicroPost("emp1", "Brahma"));
+        microPosts.add(new MicroPost("emp2", "Vishnu"));
+        microPosts.add(new MicroPost("emp3", "Mahesh"));
+        notifyDataSetChanged();
         inflater = LayoutInflater.from(context);
     }
 
@@ -46,7 +50,7 @@ public class MicroPostAdapter extends BaseAdapter {
         return microPosts.size();
     }
 
-    public void setMicroPosts(List<MicroPost> data) {
+    void setMicroPosts(List<MicroPost> data) {
         microPosts.addAll(data);
         notifyDataSetChanged();
     }
