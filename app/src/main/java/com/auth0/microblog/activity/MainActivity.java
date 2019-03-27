@@ -1,4 +1,4 @@
-package com.auth0.microblog;
+package com.auth0.microblog.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.auth0.microblog.model.MicroPost;
+import com.auth0.microblog.util.MicroPostAdapter;
+import com.auth0.microblog.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,6 +1,5 @@
-package com.auth0.microblog;
+package com.auth0.microblog.identity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.widget.Toast;
@@ -15,6 +14,9 @@ import com.auth0.android.callback.BaseCallback;
 import com.auth0.android.provider.AuthCallback;
 import com.auth0.android.provider.WebAuthProvider;
 import com.auth0.android.result.Credentials;
+import com.auth0.microblog.R;
+import com.auth0.microblog.activity.AuthAwareActivity;
+import com.auth0.microblog.activity.MainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +27,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
     private Class<? extends AuthAwareActivity> nextActivity;
     private SecureCredentialsManager credentialsManager;
 
-    AuthenticationHandler(AuthAwareActivity originalActivity) {
+    public AuthenticationHandler(AuthAwareActivity originalActivity) {
         this.originalActivity = originalActivity;
 
         // configuring Auth0
@@ -35,7 +37,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
         credentialsManager = new SecureCredentialsManager(originalActivity, client, new SharedPreferencesStorage(originalActivity));
     }
 
-    void startAuthenticationProcess() {
+    public void startAuthenticationProcess() {
         WebAuthProvider.init(auth0)
                 .withScheme("to-do")
                 .withScope("openid profile email offline_access")
@@ -43,7 +45,7 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
                 .start(originalActivity, this);
     }
 
-    void logout() {
+    public void logout() {
         credentialsManager.clearCredentials();
         originalActivity.runOnUiThread(new Runnable() {
             @Override
@@ -58,12 +60,12 @@ public class AuthenticationHandler implements AuthCallback, BaseCallback<Credent
         });
     }
 
-    void refreshCredentials(Class<? extends AuthAwareActivity> nextActivity) {
+    public void refreshCredentials(Class<? extends AuthAwareActivity> nextActivity) {
         this.nextActivity = nextActivity;
         credentialsManager.getCredentials(this);
     }
 
-    boolean hasValidCredentials() {
+    public boolean hasValidCredentials() {
         return this.credentialsManager.hasValidCredentials();
     }
 

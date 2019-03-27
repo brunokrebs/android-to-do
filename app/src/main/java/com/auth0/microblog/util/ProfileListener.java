@@ -1,7 +1,9 @@
-package com.auth0.microblog;
+package com.auth0.microblog.util;
 
 import android.content.Intent;
 import android.view.MenuItem;
+
+import com.auth0.microblog.activity.MicroPostFormActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

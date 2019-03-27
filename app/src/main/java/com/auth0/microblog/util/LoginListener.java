@@ -1,6 +1,8 @@
-package com.auth0.microblog;
+package com.auth0.microblog.util;
 
 import android.view.MenuItem;
+
+import com.auth0.microblog.identity.AuthenticationHandler;
 
 public class LoginListener implements MenuItem.OnMenuItemClickListener {
     private AuthenticationHandler authenticationHandler;

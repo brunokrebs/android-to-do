@@ -1,4 +1,4 @@
-package com.auth0.microblog;
+package com.auth0.microblog.model;
 
 public class MicroPost {
     private final String id;

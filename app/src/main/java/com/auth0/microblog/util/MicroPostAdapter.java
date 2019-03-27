@@ -1,4 +1,4 @@
-package com.auth0.microblog;
+package com.auth0.microblog.util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.auth0.microblog.R;
+import com.auth0.microblog.model.MicroPost;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class MicroPostAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<MicroPost> microPosts = new ArrayList<>();
 
-    MicroPostAdapter(Context context) {
+    public MicroPostAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -54,7 +56,7 @@ public class MicroPostAdapter extends BaseAdapter {
         return microPosts.size();
     }
 
-    void setMicroPosts(List<MicroPost> data) {
+    public void setMicroPosts(List<MicroPost> data) {
         microPosts = data;
         notifyDataSetChanged();
     }

@@ -1,10 +1,15 @@
-package com.auth0.microblog;
+package com.auth0.microblog.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.auth0.microblog.identity.AuthenticationHandler;
+import com.auth0.microblog.util.LoginListener;
+import com.auth0.microblog.util.LogoutListener;
+import com.auth0.microblog.util.ProfileListener;
+import com.auth0.microblog.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +25,7 @@ public abstract class AuthAwareActivity extends AppCompatActivity {
 
     }
 
-    protected void refreshMenu() {
+    public void refreshMenu() {
         MenuItem firstOption = menu.findItem(R.id.first_action);
         MenuItem secondOption = menu.findItem(R.id.second_action);
 
