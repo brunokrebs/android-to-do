@@ -50,7 +50,7 @@ public class MainActivity extends AuthAwareActivity implements Response.Listener
             for (int i = 0; i < response.length(); i++) {
                 JSONObject item = response.getJSONObject(i);
                 String id = item.getString("_id");
-                String message = item.getString("title");
+                String message = item.getString("message");
                 microPosts.add(new MicroPost(id, message));
             }
             microPostsAdapter.setMicroPosts(microPosts);

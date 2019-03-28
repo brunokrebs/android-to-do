@@ -41,7 +41,7 @@ public class MicroPostFormActivity extends AuthAwareActivity {
 
         try {
             JSONObject jo = new JSONObject();
-            jo.put("title", message);
+            jo.put("message", message);
 
             JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, jo,
                     new Response.Listener<JSONObject>() {
