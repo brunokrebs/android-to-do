@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.auth0.microblog.model.MicroPost;
+import com.auth0.microblog.model.UserProfile;
 import com.auth0.microblog.util.MicroPostAdapter;
 import com.auth0.microblog.R;
 
@@ -51,7 +52,17 @@ public class MainActivity extends AuthAwareActivity implements Response.Listener
                 JSONObject item = response.getJSONObject(i);
                 String id = item.getString("_id");
                 String message = item.getString("message");
-                microPosts.add(new MicroPost(id, message));
+
+                JSONObject profile = item.getJSONObject("user");
+                UserProfile userProfile = new UserProfile(
+                        profile.getString("user_id"),
+                        profile.getString("name"),
+                        profile.getString("nickname"),
+                        profile.getString("picture"),
+                        profile.getString("email")
+                );
+
+                microPosts.add(new MicroPost(id, message, userProfile));
             }
             microPostsAdapter.setMicroPosts(microPosts);
         } catch (JSONException error) {

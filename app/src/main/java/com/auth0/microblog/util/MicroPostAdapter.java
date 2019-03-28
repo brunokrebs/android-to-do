@@ -36,7 +36,10 @@ public class MicroPostAdapter extends BaseAdapter {
         message.setText(microPost.getMessage());
 
         ImageView profilePicture = view.findViewById(R.id.profile_picture);
-        Glide.with(context).load("https://s.gravatar.com/avatar/d1ad971613b01e221226aa2f4700267a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fsk.png").into(profilePicture);
+        Glide.with(context).load(microPost.getUserProfile().getPictureURL()).into(profilePicture);
+
+        TextView author = view.findViewById(R.id.author);
+        author.setText(microPost.getUserProfile().getEmail());
 
         return view;
     }

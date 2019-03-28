@@ -44,7 +44,7 @@
                     android:background="@color/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/button"
+                    android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
