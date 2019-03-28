@@ -2,9 +2,5 @@
     <item
         android:id="@+id/first_action"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_check_white_24dp"
-        android:title="Refresh" />
-    <item
-        android:id="@+id/second_action"
-        android:title="Settings" />
+        android:title="" />
 </menu>
